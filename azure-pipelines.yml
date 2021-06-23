@@ -22,7 +22,7 @@ jobs:
       - task: CopyFiles@2
         displayName: "Copy Library"
         inputs:
-          SourceFolder: "oatpp/build/src/Debug/"
+          SourceFolder: "oatpp/build"
           Contents: "oatpp.lib"
           TargetFolder: $(Build.ArtifactStagingDirectory)/lib/windows/
       - task: PublishBuildArtifacts@1
