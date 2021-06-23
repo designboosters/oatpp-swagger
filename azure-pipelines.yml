@@ -4,6 +4,35 @@
 # https://aka.ms/yaml
 
 jobs:
+  - job: ubuntu_16_04
+    displayName: 'Build - Ubuntu 16.04'
+    continueOnError: false
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    workspace:
+      clean: all
+    steps:
+      - script: |
+          mkdir build
+      - script: |
+          git clone https://github.com/oatpp/oatpp
+          mkdir -p oatpp/build
+        displayName: 'Checkout - oatpp'
+        workingDirectory: build
+      - script: |
+          cmake ..
+          sudo make install
+        displayName: 'Build - oatpp'
+        workingDirectory: build/oatpp/build
+      - script: |
+          cmake ..
+          make
+        displayName: 'Build - module'
+        workingDirectory: build
+      - script: |
+          make test ARGS="-V"
+        displayName: 'Test'
+        workingDirectory: build
   - job: windows
     displayName: 'Build - Windows'
     continueOnError: false
@@ -19,28 +48,17 @@ jobs:
           MD oatpp\build
         displayName: 'Checkout - oatpp'
         workingDirectory: build
-      
-            
       - script: |
           cmake ..
           cmake --build . --target INSTALL
         displayName: 'Build - oatpp'
         workingDirectory: build\oatpp\build
-
-      - task: CopyFiles@2
-        displayName: "Copy Library"
-        inputs:
-          SourceFolder: "build/oatpp/build"
-          Contents: "oatpp.lib"
-          TargetFolder: $(Build.ArtifactStagingDirectory)/lib/windows/
-      - task: PublishBuildArtifacts@1
-        displayName: "Publish Artifacts"
-        inputs:
-          pathToPublish: $(Build.ArtifactStagingDirectory)
-          artifactName: Artifacts
-
       - script: |
           cmake ..
           cmake --build .
         displayName: 'Build - module'
         workingDirectory: build
+      - script: |
+          module-tests.exe
+        displayName: 'Test'
+        workingDirectory: build\test\Debug\
