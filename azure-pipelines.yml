@@ -19,6 +19,18 @@ jobs:
           MD oatpp\build
         displayName: 'Checkout - oatpp'
         workingDirectory: build
+      - task: CopyFiles@2
+        displayName: "Copy Library"
+        inputs:
+          SourceFolder: "build/oatpp/build/src/Debug"
+          Contents: "oatpp.lib"
+          TargetFolder: $(Build.ArtifactStagingDirectory)/lib/windows/
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifacts"
+        inputs:
+          pathToPublish: $(Build.ArtifactStagingDirectory)
+          artifactName: Artifacts
+            
       - script: |
           cmake ..
           cmake --build . --target INSTALL
