@@ -41,3 +41,8 @@ jobs:
           SourceFolder: "build/oatpp/build/src/Debug"
           Contents: "oatpp.lib"
           TargetFolder: $(Build.ArtifactStagingDirectory)/lib/windows/
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifacts"
+        inputs:
+          pathToPublish: $(Build.ArtifactStagingDirectory)
+          artifactName: Artifacts
