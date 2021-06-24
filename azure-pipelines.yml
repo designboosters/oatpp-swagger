@@ -24,6 +24,17 @@ jobs:
           sudo make install
         displayName: 'Build - oatpp'
         workingDirectory: build/oatpp/build
+      - task: CopyFiles@2
+        displayName: "Copy Headers"
+        inputs:
+          SourceFolder: "src/oatpp/"
+          Contents: "**/?(*.h|*.hpp)"
+          TargetFolder: $(Build.ArtifactStagingDirectory)/includes/
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifacts"
+        inputs:
+          pathToPublish: $(Build.ArtifactStagingDirectory)
+          artifactName: Artifacts
       - script: |
           cmake ..
           make
