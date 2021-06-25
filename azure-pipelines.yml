@@ -30,11 +30,33 @@ jobs:
         displayName: 'Build - module'
         workingDirectory: build
       - task: CopyFiles@2
+        displayName: "Copy Headers oatpp"
+        inputs:
+          SourceFolder: "build/oatpp/src"
+          Contents: "**/?(*.h|*.hpp)"
+          TargetFolder: $(Build.ArtifactStagingDirectory)/includes/oatpp
+      - task: CopyFiles@2
+        displayName: "Copy Library oatpp"
+        inputs:
+          SourceFolder: "build/oatpp/build/src/Debug"
+          Contents: "oatpp.lib"
+          TargetFolder: $(Build.ArtifactStagingDirectory)/lib/windows/
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifacts"
+        inputs:
+          pathToPublish: $(Build.ArtifactStagingDirectory)
+          artifactName: Artifacts
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifacts"
+        inputs:
+          pathToPublish: $(Build.ArtifactStagingDirectory)
+          artifactName: Artifacts
+      - task: CopyFiles@2
         displayName: "Copy Headers oatpp-swagger"
         inputs:
           SourceFolder: "src/oatpp-swagger"
           Contents: "**/?(*.h|*.hpp)"
-          TargetFolder: $(Build.ArtifactStagingDirectory)/includes/
+          TargetFolder: $(Build.ArtifactStagingDirectory)/includes/oatpp-swagger
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifacts"
         inputs:
