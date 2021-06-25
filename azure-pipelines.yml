@@ -32,7 +32,7 @@ jobs:
       - task: CopyFiles@2
         displayName: "Copy Headers oatpp-swagger"
         inputs:
-          SourceFolder: "build/src/oatpp-swagger"
+          SourceFolder: "src/oatpp-swagger"
           Contents: "**/?(*.h|*.hpp)"
           TargetFolder: $(Build.ArtifactStagingDirectory)/includes/
       - task: PublishBuildArtifacts@1
