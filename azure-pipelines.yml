@@ -46,3 +46,8 @@ jobs:
         inputs:
           pathToPublish: $(Build.ArtifactStagingDirectory)
           artifactName: Artifacts
+      - script: |
+          cmake ..
+          cmake --build .
+        displayName: 'Build - module'
+        workingDirectory: build
