@@ -25,7 +25,7 @@ jobs:
         displayName: 'Build - oatpp'
         workingDirectory: build\oatpp\build
       - task: CopyFiles@2
-        displayName: "Copy Headers"
+        displayName: "Copy Headers oatpp"
         inputs:
           SourceFolder: "build/oatpp/src"
           Contents: "**/?(*.h|*.hpp)"
@@ -36,7 +36,7 @@ jobs:
           pathToPublish: $(Build.ArtifactStagingDirectory)
           artifactName: Artifacts
       - task: CopyFiles@2
-        displayName: "Copy Library"
+        displayName: "Copy Library oatpp"
         inputs:
           SourceFolder: "build/oatpp/build/src/Debug"
           Contents: "oatpp.lib"
@@ -51,3 +51,15 @@ jobs:
           cmake --build .
         displayName: 'Build - module'
         workingDirectory: build
+      - task: CopyFiles@2
+        displayName: "Copy Headers oatpp-swagger"
+        inputs:
+          SourceFolder: "build/src"
+          Contents: "**/?(*.h|*.hpp)"
+          TargetFolder: $(Build.ArtifactStagingDirectory)/includes/
+      - task: CopyFiles@2
+        displayName: "Copy Library oatpp-swagger"
+        inputs:
+          SourceFolder: "build/src/Debug"
+          Contents: "oatpp.lib"
+          TargetFolder: $(Build.ArtifactStagingDirectory)/lib/windows/
