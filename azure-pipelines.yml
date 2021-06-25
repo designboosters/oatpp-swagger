@@ -57,9 +57,19 @@ jobs:
           SourceFolder: "build/src"
           Contents: "**/?(*.h|*.hpp)"
           TargetFolder: $(Build.ArtifactStagingDirectory)/includes/
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifacts"
+        inputs:
+          pathToPublish: $(Build.ArtifactStagingDirectory)
+          artifactName: Artifacts
       - task: CopyFiles@2
         displayName: "Copy Library oatpp-swagger"
         inputs:
           SourceFolder: "build/src/Debug"
           Contents: "oatpp.lib"
           TargetFolder: $(Build.ArtifactStagingDirectory)/lib/windows/
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifacts"
+        inputs:
+          pathToPublish: $(Build.ArtifactStagingDirectory)
+          artifactName: Artifacts
